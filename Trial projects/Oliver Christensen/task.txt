@@ -1,0 +1,1 @@
+Program an STM32 board so that it will be able to receive data using UART and interpretes it as control for 3 servos. 

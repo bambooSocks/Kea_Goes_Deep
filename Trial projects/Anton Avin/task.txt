@@ -1,0 +1,1 @@
+Program a STM32 board using HAL library (optional) which will be able to read from RFID sensor and depending on the scanned chip it will send different messages through UART to PC

@@ -1,0 +1,2 @@
+Make a PCB design using KiCAD/Altium Designer that will include 5V switch mode power supply that can handle upto 3A and 60V 30A pass through the board (60V 30A 1 input/ 8 outputs)
+5V PSU is also powered by 60V 30A source

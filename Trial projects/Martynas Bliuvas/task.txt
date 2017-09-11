@@ -1,0 +1,1 @@
+Make a schematic of a board using KiCAD/Altium Designer that will include STM32F042 microcontroller that will use proper decoupling. The board will have 2 connectors for CAN bus, 3 connectors for servos, one UART connection and power input of 5V.

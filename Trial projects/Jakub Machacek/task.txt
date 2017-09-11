@@ -1,0 +1,1 @@
+Program a STM32 board so that it is able to read RAW data for MPU6050 and process them in the way that you can show them in an application similar to MPUTeapot (https://goo.gl/tZ23VZ) that you make by yourself.

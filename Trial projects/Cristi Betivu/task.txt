@@ -1,0 +1,1 @@
+Make a GUI application running on Win/Linux (recommendation: use Qt) that can show webcam stream and can also record the file to mp4 format.

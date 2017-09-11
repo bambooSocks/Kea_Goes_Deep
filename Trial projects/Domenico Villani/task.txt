@@ -1,0 +1,1 @@
+Make a horizon line used in plane HUD (https://goo.gl/Ux9oCk) in GUI application running on Win/Linux (recommendation: use Qt). The application should be able to take two numbers as an input. One will control the tilt of the line and the other one will control the height of the line representing the depth of ROV.

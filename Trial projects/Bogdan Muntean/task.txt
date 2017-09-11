@@ -1,0 +1,1 @@
+Make a GUI application for Raspberry Pi written in Python that will display the image from camera and can control the focus, brightness, digital zoom and it can also save the video to format chosen by you.
