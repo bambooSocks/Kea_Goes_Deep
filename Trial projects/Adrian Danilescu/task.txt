@@ -1,0 +1,1 @@
+Make a software in Qt that will read data through serial connection and plot them into a graph (https://goo.gl/seo2fu)
