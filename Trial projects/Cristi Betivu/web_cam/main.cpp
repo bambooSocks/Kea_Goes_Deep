@@ -8,10 +8,10 @@ void cam1();
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-//    Camera w;
-//    w.show();
+    Camera w;
+    w.show();
 
-    cam1();
+//    cam1();
     return a.exec();
 }
 

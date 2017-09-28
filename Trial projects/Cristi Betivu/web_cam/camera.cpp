@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QCameraInfo>
 #include <QCameraImageCapture>
+#include <QDir>
+#include <QUrl>
+#include <QDateTime>
 
 
 Camera::Camera(QWidget *parent) :
@@ -12,33 +15,39 @@ Camera::Camera(QWidget *parent) :
     ui(new Ui::Camera)
 {
     ui->setupUi(this);
-    myCamera = new QCamera(QCameraInfo::defaultCamera());
-    QCameraImageCapture *imageCapture = new QCameraImageCapture(myCamera);
-    myCamera->setCaptureMode(QCamera::CaptureStillImage);
-    QCameraViewfinder *viewFinder = new QCameraViewfinder(this);
-    myCamera->setViewfinder(viewFinder);
-    mediaRecorder = new QMediaRecorder(myCamera);
-//    viewFinder->show();
-    ui->horizontalLayout->addWidget(viewFinder);
-    //layout = new QVBoxLayout;
-    //layout->addItem(viewFinder);
+    myCamera = new QCamera(QCameraInfo::defaultCamera(),this);
+    myCamera->setCaptureMode(QCamera::CaptureVideo);
+    myCamera->setViewfinder(ui->viewfinder);
+    mediaRecorder = new QMediaRecorder(myCamera,this);
+
+    QString name = "video" + QDateTime::currentDateTime().toString("dd.MM.yy-h-m-s");
+    outputPath.append(QDir::currentPath() + "/" + name + ".mp4");
+    mediaRecorder->setOutputLocation(QUrl::fromLocalFile(outputPath));
+
+    myCamera->start();
 }
 
 Camera::~Camera()
 {
+    mediaRecorder->stop();
     delete ui;
 }
 
 void Camera::on_startButton_clicked()
 {
-    //myCamera->start();
-
-    qDebug() << "Test1";
+    if(mediaRecorder->state() == QMediaRecorder::RecordingState){
+        qDebug() << "A recording is already started.";
+    }else{
+        QString message = "File will be saved at following path: " + outputPath;
+        qDebug() << message;
+        mediaRecorder->record();
+        qDebug() << "Start recording";
+    }
 }
 
 void Camera::on_stopButton_clicked()
 {
-    //myCamera->start();
-
-    qDebug() << "Test2";
+    qDebug() << myCamera->isCaptureModeSupported(QCamera::CaptureVideo);
+    mediaRecorder->stop();
+    qDebug() << "Stop recording";
 }

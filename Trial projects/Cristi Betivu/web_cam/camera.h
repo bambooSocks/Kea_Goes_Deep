@@ -29,11 +29,12 @@ private slots:
 private:
     Ui::Camera *ui;
     QCamera *myCamera;
-    //QCameraViewfinder *viewFinder;
-    QVBoxLayout *layout;
+//    QCameraViewfinder *viewfinder;
+//    QVBoxLayout *layout;
     QPushButton *startButton;
     QPushButton *stopButton;
     QMediaRecorder *mediaRecorder;
+    QString outputPath;
 };
 
 #endif // CAMERA_H
