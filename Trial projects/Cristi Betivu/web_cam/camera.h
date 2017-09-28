@@ -34,7 +34,6 @@ private:
     QPushButton *startButton;
     QPushButton *stopButton;
     QMediaRecorder *mediaRecorder;
-    QString outputPath;
 };
 
 #endif // CAMERA_H

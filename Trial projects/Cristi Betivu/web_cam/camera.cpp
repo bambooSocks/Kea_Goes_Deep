@@ -7,7 +7,10 @@
 #include <QCameraImageCapture>
 #include <QDir>
 #include <QUrl>
-#include <QDateTime>
+#include <QFileDialog>
+#include <QVideoRendererControl>
+#include <QVideoSurfaceFormat>
+#include <QAbstractVideoSurface>
 
 
 Camera::Camera(QWidget *parent) :
@@ -20,16 +23,25 @@ Camera::Camera(QWidget *parent) :
     myCamera->setViewfinder(ui->viewfinder);
     mediaRecorder = new QMediaRecorder(myCamera,this);
 
-    QString name = "video" + QDateTime::currentDateTime().toString("dd.MM.yy-h-m-s");
-    outputPath.append(QDir::currentPath() + "/" + name + ".mp4");
-    mediaRecorder->setOutputLocation(QUrl::fromLocalFile(outputPath));
-
     myCamera->start();
+
+    // Also have a look here http://doc.qt.io/qt-5/cameraoverview.html , search for "rotate"
+    QVideoRendererControl *rendererControl = myCamera->service()->requestControl<QVideoRendererControl *>();
+        if (rendererControl) {
+            QAbstractVideoSurface *surface = rendererControl->surface();
+            QVideoSurfaceFormat format = surface->surfaceFormat();
+            format.setProperty("mirrored", true);
+
+            surface->stop();
+            surface->start(format);
+        } else {
+            qDebug() << "Backend doesn't provide a video renderer control";
+        }
 }
 
 Camera::~Camera()
 {
-    mediaRecorder->stop();
+    on_stopButton_clicked();
     delete ui;
 }
 
@@ -38,16 +50,26 @@ void Camera::on_startButton_clicked()
     if(mediaRecorder->state() == QMediaRecorder::RecordingState){
         qDebug() << "A recording is already started.";
     }else{
-        QString message = "File will be saved at following path: " + outputPath;
-        qDebug() << message;
-        mediaRecorder->record();
-        qDebug() << "Start recording";
+        QDir currDir = QDir::current();
+        currDir.cdUp();
+
+        QFileDialog dialog(this);
+        QUrl output = dialog.getSaveFileUrl(this, ("Save video to:"), currDir.path(), tr("Videos (*.mp4 *.avi)"));
+        //qDebug() << output;
+
+        if(output.isValid()){
+            mediaRecorder->setOutputLocation(output.path());
+            mediaRecorder->record();
+            qDebug() << "Start recording";
+        }else{
+            qDebug() << "You have to select a path first!";
+        }
     }
 }
 
 void Camera::on_stopButton_clicked()
 {
-    qDebug() << myCamera->isCaptureModeSupported(QCamera::CaptureVideo);
+    //qDebug() << myCamera->isCaptureModeSupported(QCamera::CaptureVideo);
     mediaRecorder->stop();
     qDebug() << "Stop recording";
 }
