@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2017-09-18T20:50:00
+# Project created by QtCreator 2017-09-28T19:15:55
 #
 #-------------------------------------------------
 
@@ -8,7 +8,7 @@ QT       += core gui multimedia multimediawidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = web_camera
+TARGET = web_cam
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -25,13 +25,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    camera.cpp \
-    videosettings.cpp
+        camera.cpp
 
 HEADERS += \
-    camera.h \
-    videosettings.h
+        camera.h
 
 FORMS += \
-    camera.ui \
-    videosettings.ui
+        camera.ui
